@@ -1,0 +1,16 @@
+{
+  "restaurants": [
+    {
+      "name": "Cafe Delight",
+      "address": "123 Main St, New York, NY",
+      "latitude": 40.7112,
+      "longitude": -74.0055
+    },
+    {
+      "name": "Pasta Paradise",
+      "address": "456 Elm St, New York, NY",
+      "latitude": 40.7145,
+      "longitude": -74.0082
+    }
+  ]
+}
