@@ -24,6 +24,11 @@ Get API running
 ```
 npm run start
 ```
+Access the docs
+-------------
+```
+http://localhost:3000/api-docs
+```
 
 ## Documentation
 Link to hosted swagger doc: https://softcom-backend-assessment.herokuapp.com/api-docs
