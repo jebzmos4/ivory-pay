@@ -1,7 +1,11 @@
 // app.ts
 import express from 'express';
-import rateLimit from 'express-rate-limit';
+import rateLimit from 'express-rate-limit'
+import * as YAML from 'yamljs';  // Import yamljs package
+import swaggerUi from 'swagger-ui-express';
 import restaurantRouter from './restaurant.routes';
+import * as path from "path";
+
 
 const app = express();
 const PORT = 3000;
@@ -15,6 +19,12 @@ const limiter = rateLimit({
 
 app.use(express.json());
 app.use(limiter); // Apply rate limiting to all routes
+
+// Swagger setup
+const swaggerFile = path.join(__dirname, 'swagger.yaml');
+const swaggerDocument = YAML.load(swaggerFile);  // Use YAML.load to parse the YAML file
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(restaurantRouter);
 
 app.get('/', (req, res) => {

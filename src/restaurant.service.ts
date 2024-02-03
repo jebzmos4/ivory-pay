@@ -9,6 +9,7 @@ export class RestaurantService {
             address: '123 Main St, New York, NY',
             latitude: 40.7112,
             longitude: -74.0055,
+            rating: 2
         },
         {
             id: 2,
@@ -16,6 +17,7 @@ export class RestaurantService {
             address: '456 Elm St, New York, NY',
             latitude: 40.7145,
             longitude: -74.0082,
+            rating: 3
         },
         // Add more restaurants as needed
     ];
@@ -24,11 +26,12 @@ export class RestaurantService {
         city: string,
         latitude: number,
         longitude: number,
-        distance: number
+        distance: number,
+        cuisine?: string, price_range?: number, min_rating?: number
     ): Restaurant[] {
         const userLocation = { latitude, longitude };
 
-        return this.restaurants.filter((restaurant) => {
+        const data =  this.restaurants.filter((restaurant) => {
             const restaurantDistance = this.calculateDistance(
                 userLocation.latitude,
                 userLocation.longitude,
@@ -41,6 +44,14 @@ export class RestaurantService {
                 city.toLowerCase() === 'new york' // Add additional city validation as needed
             );
         });
+        // Apply filters if provided
+        const filteredRestaurants = data.filter(restaurant => {
+            return (!cuisine || restaurant.cuisine === cuisine) &&
+                (!price_range || restaurant.price_range === price_range) &&
+                (!min_rating || restaurant.rating >= min_rating);
+        });
+
+        return filteredRestaurants;
     }
 
     private static calculateDistance(

@@ -5,7 +5,7 @@ import {Restaurant} from "./interface";
 
 export class RestaurantController {
     static getNearbyRestaurants(req: Request, res: Response): void {
-        const { city, latitude, longitude, distance } = req.query;
+        const { city, latitude, longitude, distance, cuisine, price_range, min_rating } = req.query;
 
         if (!city) {
             res.status(404).json({ error: 'City not provided or not supported' });
@@ -31,7 +31,8 @@ export class RestaurantController {
             city as string,
             parseFloat(latitude as string),
             parseFloat(longitude as string),
-            parseFloat(distance as string)
+            parseFloat(distance as string),
+            cuisine as string, parseInt(price_range as string), parseInt(min_rating as string)
         );
 
         res.json({ restaurants: nearbyRestaurants });

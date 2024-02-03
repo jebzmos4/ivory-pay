@@ -4,4 +4,7 @@ export interface Restaurant {
     address: string;
     latitude: number;
     longitude: number;
+    cuisine?: string;
+    price_range?: any;
+    rating: number;
 }

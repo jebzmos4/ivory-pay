@@ -1,0 +1,162 @@
+# swagger.yaml
+openapi: 3.0.0
+info:
+  title: Restaurant Finder API
+  version: 1.0.0
+paths:
+  /v1/restaurants:
+    get:
+      summary: Get all nearby restaurants
+      parameters:
+        - name: city
+          in: query
+          required: true
+          description: The name of the city where the user wants to find restaurants.
+          schema:
+            type: string
+        - name: latitude
+          in: query
+          required: true
+          description: The user's current location coordinates (latitude).
+          schema:
+            type: number
+        - name: longitude
+          in: query
+          required: true
+          description: The user's current location coordinates (longitude).
+          schema:
+            type: number
+        - name: distance
+          in: query
+          required: true
+          description: The maximum distance in meters from the user's location to the restaurant.
+          schema:
+            type: number
+        - name: cuisine
+          in: query
+          description: The cuisine type to filter by.
+          schema:
+            type: string
+        - name: price_range
+          in: query
+          description: The price range to filter by.
+          schema:
+            type: integer
+            format: int32
+        - name: min_rating
+          in: query
+          description: The minimum rating to filter by.
+          schema:
+            type: number
+            format: float
+      responses:
+        200:
+          description: A list of nearby restaurants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  restaurants:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Restaurant'
+    post:
+      summary: Add a new restaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Restaurant'
+      responses:
+        201:
+          description: Restaurant added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Restaurant'
+  /v1/restaurants/{id}:
+    get:
+      summary: Get a single restaurant by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the restaurant.
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Restaurant retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Restaurant'
+    put:
+      summary: Update an existing restaurant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the restaurant to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Restaurant'
+      responses:
+        200:
+          description: Restaurant updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Restaurant'
+    delete:
+      summary: Delete an existing restaurant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the restaurant to delete.
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Restaurant deleted successfully
+          content:
+            application/json:
+              example:
+                response: "Restaurant deleted"
+
+components:
+  schemas:
+    Restaurant:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the restaurant.
+        address:
+          type: string
+          description: The address of the restaurant.
+        latitude:
+          type: number
+          description: The latitude coordinate of the restaurant location.
+        longitude:
+          type: number
+          description: The longitude coordinate of the restaurant location.
+        cuisine:
+          type: string
+          description: The cuisine type of the restaurant.
+        price_range:
+          type: integer
+          format: int32
+          description: The price range of the restaurant.
+        rating:
+          type: number
+          format: float
+          description: The rating of the restaurant.
